@@ -1,0 +1,21 @@
+{
+  "name": "github-pr-manager",
+  "version": "0.0.0",
+  "description": "small program to manage github prs in my team :)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "test": "echo no tests here"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DyBev/github-pr-manager.git"
+  },
+  "keywords": [],
+  "author": "dybev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DyBev/github-pr-manager/issues"
+  },
+  "homepage": "https://github.com/DyBev/github-pr-manager#readme"
+}

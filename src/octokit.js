@@ -1,9 +1,9 @@
 import { Octokit } from '@octokit/core';
 
 const getInfo = async () => {
-	const octokit = await Octokit({ auth: 'personal-access-token' });
+	const octokit = new Octokit({ auth: 'personal-access-token' });
 
-	const response = octokit.request('GET /repos/{owner}/{repo}/pulls', {
+	const response = await octokit.request('GET /repos/{owner}/{repo}/pulls', {
 		owner: 'dybev',
 		repo: 'github-pr-manager',
 		headers: {
@@ -14,7 +14,7 @@ const getInfo = async () => {
 	console.log(response);
 }
 
-export default {
+export {
 	getInfo
 };
 

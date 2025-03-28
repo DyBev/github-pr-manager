@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/DyBev/github-pr-manager#readme",
   "dependencies": {
+    "@octokit/core": "^6.1.4",
     "eslint": "^9.23.0"
   }
 }

@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/DyBev/github-pr-manager/issues"
   },
-  "homepage": "https://github.com/DyBev/github-pr-manager#readme"
+  "homepage": "https://github.com/DyBev/github-pr-manager#readme",
+  "dependencies": {
+    "eslint": "^9.23.0"
+  }
 }

@@ -1,17 +1,18 @@
 import { Octokit } from '@octokit/core';
+import { getPersonalAccessToken } from './secrets.js';
 
-const getInfo = async () => {
-	const octokit = new Octokit({ auth: 'personal-access-token' });
+const getInfo = async (owner, repo) => {
+	const octokit = new Octokit({ auth: getPersonalAccessToken() });
 
 	const response = await octokit.request('GET /repos/{owner}/{repo}/pulls', {
-		owner: 'dybev',
-		repo: 'github-pr-manager',
+		owner,
+		repo,
 		headers: {
 			'X-GitHub-Api-Version': '2022-11-28',
 		},
 	});
 
-	console.log(response);
+	return response;
 }
 
 export {

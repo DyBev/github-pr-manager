@@ -8,7 +8,7 @@ if (repos.length == 0) {
 	console.error("repos no bueno");
 }
 
-let openPrs = {};
+let message = "";
 
 for (let i = 0; i < repos.length; i++) {
 	const repoOwner = repos[i].owner;
@@ -18,40 +18,21 @@ for (let i = 0; i < repos.length; i++) {
 		const targetRepo = targetRepos[j];
 		const getInfoResponse = await getInfo(repoOwner, targetRepo);
 		const pullRequests = getInfoResponse.data;
+		let messageAppend = "";
 		if (!pullRequests || (Array.isArray(pullRequests) && pullRequests.length == 0)) {
 			continue;
 		}
-		if (!openPrs[targetRepo]) {
-			openPrs[targetRepo] = [];
-		}
 		for (let k = 0; k < pullRequests.length; k++) {
 			const pullRequest = pullRequests[k];
-			openPrs[targetRepo].push({
-				title: pullRequest.title,
-				link: pullRequest.html_url
-			});
+			if (!pullRequest.draft && !pullRequest.title.toLowerCase().includes('do not merge')) {
+				messageAppend = `${message}${`- [${pullRequest.title}](${pullRequest.html_url})`}\n`
+			};
+		}
+		if (messageAppend.length !== 0) {
+			message = `${message}\n*${targetRepo}*:\n${messageAppend}`
 		}
 	}
 }
 
-const formatSlackMessage = (openPrs) => {
-	let message = "";
-	const reposWithOpenPrs = Object.keys(openPrs);
-
-	if (reposWithOpenPrs.length == 0) return "There are no open PRs team, go open some!"
-
-	for (let i = 0; i < reposWithOpenPrs.length; i++) {
-		const repo = reposWithOpenPrs[i];
-		const openPrsInRepo = openPrs[repo];
-		message = `${message}\n*${repo}*:\n`
-		for (let j = 0; j < openPrsInRepo.length; j++) {
-			const prData = openPrsInRepo[j];
-			message = `${message}${`- [${prData.title}](${prData.link})`}\n`
-		};
-	};
-
-	return message;
-}
-
-console.log(formatSlackMessage(openPrs))
+console.log(message)
 
